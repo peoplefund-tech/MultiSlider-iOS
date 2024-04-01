@@ -122,13 +122,6 @@ extension MultiSlider {
         updateOuterTrackViews()
     }
     
-    func setUpThumbsSize(_ value: CGFloat) {
-        thumbViews.forEach {
-            $0.heightAnchor.constraint(equalToConstant: value).isActive = true
-            $0.widthAnchor.constraint(equalToConstant: value).isActive = true
-        }
-    }
-
     func updateOuterTrackViews() {
         outerTrackViews.removeAllViews()
         outerTrackViews.removeAll()

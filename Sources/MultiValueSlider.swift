@@ -147,7 +147,8 @@ import SwiftUI
     }
 
     func thumbSize(_ value: CGFloat) -> Self {
-        uiView.setUpThumbsSize(value)
+        uiView.defaultThumbImage = .circle(diameter: value)
+        
         return self
     }
     
