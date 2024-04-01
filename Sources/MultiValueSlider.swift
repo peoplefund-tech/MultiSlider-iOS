@@ -16,7 +16,7 @@ import SwiftUI
 
     @Binding var value: [CGFloat]
 
-    init(
+    public init(
         lowerValue: Binding<CGFloat>,
         upperValue: Binding<CGFloat>,
         in bounds: ClosedRange<CGFloat>
