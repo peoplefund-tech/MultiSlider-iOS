@@ -16,25 +16,25 @@ import SwiftUI
 
     @Binding var value: [CGFloat]
 
-    public init(
-        lowerValue: Binding<CGFloat>,
-        upperValue: Binding<CGFloat>,
-        in bounds: ClosedRange<CGFloat>,
+    public init<T>(
+        lowerValue: Binding<T>,
+        upperValue: Binding<T>,
+        in bounds: ClosedRange<T>,
         onEditingEnded: (() -> Void)? = nil
-    ) {
+    ) where T: BinaryFloatingPoint, T.Stride: BinaryFloatingPoint {
         let bindingValue = Binding<[CGFloat]>(
             get: {
-                [lowerValue.wrappedValue, upperValue.wrappedValue]
+                [CGFloat(lowerValue.wrappedValue), CGFloat(upperValue.wrappedValue)]
             },
             set: { newValue in
-                lowerValue.wrappedValue = newValue[0]
-                upperValue.wrappedValue = newValue[1]
+                lowerValue.wrappedValue = T(newValue[0])
+                upperValue.wrappedValue = T(newValue[1])
             }
         )
         
         self._value = bindingValue
-        uiView.minimumValue = bounds.lowerBound
-        uiView.maximumValue = bounds.upperBound
+        uiView.minimumValue = CGFloat(bounds.lowerBound)
+        uiView.maximumValue = CGFloat(bounds.upperBound)
         // MARK: default setup
         uiView.hasRoundTrackEnds = true
         uiView.isHapticSnap = true
