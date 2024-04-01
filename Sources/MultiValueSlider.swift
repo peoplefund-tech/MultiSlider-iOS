@@ -20,7 +20,7 @@ import SwiftUI
         lowerValue: Binding<CGFloat>,
         upperValue: Binding<CGFloat>,
         in bounds: ClosedRange<CGFloat>,
-        onEditingEnded: (() -> Void)?
+        onEditingEnded: (() -> Void)? = nil
     ) {
         let bindingValue = Binding<[CGFloat]>(
             get: {
@@ -41,6 +41,13 @@ import SwiftUI
         uiView.orientation = .horizontal
         uiView.trackWidth = 5
         uiView.onEditingEnded = onEditingEnded
+        // bluegray50
+        uiView.outerTrackColor = UIColor(
+            red: 236,
+            green: 239,
+            blue: 241,
+            alpha: 1.0
+        )
     }
 
     public func makeUIView(context: UIViewRepresentableContext<MultiValueSlider>) -> MultiSlider {
