@@ -142,6 +142,7 @@ import SwiftUI
     }
 
     func thumbSize(_ value: CGFloat) -> Self {
+        uiView.translatesAutoresizingMaskIntoConstraints = false
         uiView.thumbViews.forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.heightAnchor.constraint(equalToConstant: value).isActive = true
