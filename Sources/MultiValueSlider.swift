@@ -46,7 +46,7 @@ import SwiftUI
             red: 236,
             green: 239,
             blue: 241,
-            alpha: 1.0
+            alpha: 0
         )
     }
 
