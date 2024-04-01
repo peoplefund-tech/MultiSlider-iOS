@@ -259,7 +259,6 @@ extension UIImage {
     static func circle(diameter: CGFloat = 29, width: CGFloat = 0.5, color: UIColor? = UIColor.lightGray.withAlphaComponent(0.5), fill: UIColor? = .white) -> UIImage? {
         let circleLayer = CAShapeLayer()
         circleLayer.fillColor = fill?.cgColor
-        circleLayer.strokeColor = color?.cgColor
         circleLayer.lineWidth = width
         let margin = width * 2
         let circle = UIBezierPath(ovalIn: CGRect(x: margin, y: margin, width: diameter, height: diameter))
