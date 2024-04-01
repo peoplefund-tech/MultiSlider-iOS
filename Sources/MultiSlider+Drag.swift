@@ -26,6 +26,7 @@ extension MultiSlider: UIGestureRecognizerDelegate {
             if isHapticSnap { selectionFeedbackGenerator.end() }
             sendActions(for: .touchUpInside) // no bounds check for now (.touchUpInside vs .touchUpOutside)
             if !isContinuous { sendActions(for: [.valueChanged, .primaryActionTriggered]) }
+            onEditingEnded?()
         default:
             break
         }

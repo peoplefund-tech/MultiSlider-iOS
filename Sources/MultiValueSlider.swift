@@ -19,7 +19,8 @@ import SwiftUI
     public init(
         lowerValue: Binding<CGFloat>,
         upperValue: Binding<CGFloat>,
-        in bounds: ClosedRange<CGFloat>
+        in bounds: ClosedRange<CGFloat>,
+        onEditingEnded: (() -> Void)?
     ) {
         let bindingValue = Binding<[CGFloat]>(
             get: {
@@ -39,6 +40,7 @@ import SwiftUI
         uiView.isHapticSnap = true
         uiView.orientation = .horizontal
         uiView.trackWidth = 5
+        uiView.onEditingEnded = onEditingEnded
     }
 
     public func makeUIView(context: UIViewRepresentableContext<MultiValueSlider>) -> MultiSlider {
