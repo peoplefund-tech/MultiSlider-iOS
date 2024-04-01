@@ -34,6 +34,11 @@ import SwiftUI
         self._value = bindingValue
         uiView.minimumValue = bounds.lowerBound
         uiView.maximumValue = bounds.upperBound
+        // MARK: default setup
+        uiView.hasRoundTrackEnds = true
+        uiView.isHapticSnap = true
+        uiView.orientation = .horizontal
+        uiView.trackWidth = 5
     }
 
     public func makeUIView(context: UIViewRepresentableContext<MultiValueSlider>) -> MultiSlider {
