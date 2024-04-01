@@ -16,53 +16,24 @@ import SwiftUI
 
     @Binding var value: [CGFloat]
 
-    public init(
-        value: Binding<[CGFloat]>,
-        minimumValue: CGFloat? = nil,
-        maximumValue: CGFloat? = nil,
-        isContinuous: Bool? = nil,
-        snapStepSize: CGFloat? = nil,
-        isHapticSnap: Bool? = nil,
-        valueLabelPosition: NSLayoutConstraint.Attribute? = nil,
-        valueLabelAlternatePosition: Bool? = nil,
-        isValueLabelRelative: Bool? = nil,
-        orientation: NSLayoutConstraint.Axis? = nil,
-        outerTrackColor: UIColor? = nil,
-        valueLabelColor: UIColor? = nil,
-        valueLabelFont: UIFont? = nil,
-        thumbImage: UIImage? = nil,
-        showsThumbImageShadow: Bool? = nil,
-        minimumImage: UIImage? = nil,
-        maximumImage: UIImage? = nil,
-        trackWidth: CGFloat? = nil,
-        hasRoundTrackEnds: Bool? = nil,
-        distanceBetweenThumbs: CGFloat? = nil,
-        keepsDistanceBetweenThumbs: Bool? = nil,
-        valueLabelFormatter: NumberFormatter? = nil
+    init(
+        lowerValue: Binding<CGFloat>,
+        upperValue: Binding<CGFloat>,
+        in bounds: ClosedRange<CGFloat>
     ) {
-        _value = value
-
-        uiView.minimumValue =? minimumValue
-        uiView.maximumValue =? maximumValue
-        uiView.isContinuous =? isContinuous
-        uiView.snapStepSize =? snapStepSize
-        uiView.isHapticSnap =? isHapticSnap
-        uiView.valueLabelPosition =? valueLabelPosition
-        uiView.valueLabelAlternatePosition =? valueLabelAlternatePosition
-        uiView.isValueLabelRelative =? isValueLabelRelative
-        uiView.orientation =? orientation
-        uiView.outerTrackColor =? outerTrackColor
-        uiView.valueLabelColor =? valueLabelColor
-        uiView.valueLabelFont =? valueLabelFont
-        uiView.thumbImage =? thumbImage
-        uiView.showsThumbImageShadow =? showsThumbImageShadow
-        uiView.minimumImage =? minimumImage
-        uiView.maximumImage =? maximumImage
-        uiView.trackWidth =? trackWidth
-        uiView.hasRoundTrackEnds =? hasRoundTrackEnds
-        uiView.distanceBetweenThumbs =? distanceBetweenThumbs
-        uiView.keepsDistanceBetweenThumbs =? keepsDistanceBetweenThumbs
-        uiView.valueLabelFormatter =? valueLabelFormatter
+        let bindingValue = Binding<[CGFloat]>(
+            get: {
+                [lowerValue.wrappedValue, upperValue.wrappedValue]
+            },
+            set: { newValue in
+                lowerValue.wrappedValue = newValue[0]
+                upperValue.wrappedValue = newValue[1]
+            }
+        )
+        
+        self._value = bindingValue
+        uiView.minimumValue = bounds.lowerBound
+        uiView.maximumValue = bounds.upperBound
     }
 
     public func makeUIView(context: UIViewRepresentableContext<MultiValueSlider>) -> MultiSlider {
@@ -101,10 +72,10 @@ import SwiftUI
         uiView.maximumValue = value
         return self
     }
-
-    /// snap thumbs to specific values, evenly spaced. (default = 0: allow any value)
-    func snapStepSize(_ value: CGFloat) -> Self {
+    
+    func step(_ value: CGFloat) -> Self {
         uiView.snapStepSize = value
+        uiView.distanceBetweenThumbs = value
         return self
     }
 
@@ -139,7 +110,6 @@ import SwiftUI
     }
 
     // MARK: - Appearance
-
     func orientation(_ value: NSLayoutConstraint.Axis) -> Self {
         uiView.orientation = value
         return self
@@ -171,6 +141,14 @@ import SwiftUI
         return self
     }
 
+    func thumbSize(_ value: CGFloat) -> Self {
+        uiView.thumbViews.forEach {
+                $0.heightAnchor.constraint(equalToConstant: value).isActive = true
+                $0.widthAnchor.constraint(equalToConstant: value).isActive = true
+        }
+        return self
+    }
+    
     func showsThumbImageShadow(_ value: Bool) -> Self {
         uiView.showsThumbImageShadow = value
         return self
@@ -204,12 +182,6 @@ import SwiftUI
     /// when thumb value is minimum or maximum, align it's center with the track end instead of its edge.
     func centerThumbOnTrackEnd(_ value: Bool) -> Self {
         uiView.centerThumbOnTrackEnd = value
-        return self
-    }
-
-    /// minimal distance to keep between thumbs (half a thumb by default)
-    func distanceBetweenThumbs(_ value: CGFloat) -> Self {
-        uiView.distanceBetweenThumbs = value
         return self
     }
 
