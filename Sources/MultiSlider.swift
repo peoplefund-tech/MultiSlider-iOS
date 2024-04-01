@@ -307,6 +307,13 @@ open class MultiSlider: UIControl {
             setupTrackLayoutMargins()
         }
     }
+    
+    @IBInspectable public dynamic var thumbSize: CGFloat = 30 {
+        didSet {
+            thumbImage = .circle(diameter: thumbSize)
+            setupTrackLayoutMargins()
+        }
+    }
 
     // MARK: - Subviews
 
