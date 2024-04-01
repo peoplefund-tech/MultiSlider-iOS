@@ -10,7 +10,7 @@ import SweeterSwift
 import SwiftUI
 
 /// Slider clone with multiple thumbs and values, range highlight, optional snap intervals, optional value labels.
-@available(iOS 13.0, *) public struct MultiValueSlider: UIViewRepresentable {
+@available(iOS 14.0, *) public struct MultiValueSlider: UIViewRepresentable {
     public typealias UIViewType = MultiSlider
     private let uiView = MultiSlider()
 
@@ -42,12 +42,7 @@ import SwiftUI
         uiView.trackWidth = 5
         uiView.onEditingEnded = onEditingEnded
         // bluegray50
-        uiView.outerTrackColor = UIColor(
-            red: 236,
-            green: 239,
-            blue: 241,
-            alpha: 0
-        )
+        uiView.outerTrackColor = UIColor(Color(hex: "ECEFF1"))
     }
 
     public func makeUIView(context: UIViewRepresentableContext<MultiValueSlider>) -> MultiSlider {
@@ -76,7 +71,7 @@ import SwiftUI
     }
 }
 
-@available(iOS 13.0, *) public extension MultiValueSlider {
+@available(iOS 14.0, *) public extension MultiValueSlider {
     func minimumValue(_ value: CGFloat) -> Self {
         uiView.minimumValue = value
         return self
